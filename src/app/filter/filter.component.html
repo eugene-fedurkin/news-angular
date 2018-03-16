@@ -1,0 +1,16 @@
+<div class="outside">
+  <div class="container">
+    <a routerLink="">X</a>
+    <input type="text" [ngModel]="typeSources" (ngModelChange)="filterSources($event)" />
+    <div class="sources">
+      <ul>
+        <li *ngFor="let source of filteredSources" (click)="selectSource(source)">{{source.name}}</li>
+      </ul>
+    </div>
+    <div class="sourcesToFilter">
+      <ul>
+        <li *ngFor="let source of selectedSources" (click)="unSelectSource(source)">{{source.name}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
