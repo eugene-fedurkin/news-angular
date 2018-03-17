@@ -1,6 +1,10 @@
-<router-outlet></router-outlet>
+<router-outlet (onChanged)="onChanged()"></router-outlet>
+<spinner></spinner>
 <a routerLink="filter">Filter</a>
+<button (click)="isWatchLater ? watchNews($event) : watchLater($event)">{{isWatchLater ? WatchLater : WatchNews}}Watch later</button>
 <div *ngFor="let article of articles">
+  <button (click)="saveForLater(article)" [hidden]="isWatchLater">+</button>
   <h2>{{article.title}}</h2>
-  <img src={{article.urlToImage}} alt="" />
+  <img src={{article.urlToImage}} alt={{article.title}} />
+  <a routerLink="detail/{{article.source.name}}" routerLinkActive="active">Read more...</a>
 </div>

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { HttpMockService } from '../services/http.mock.service';
+import { SpinnerService } from '../services/spinner.service';
+import { StoreService } from '../services/store.services';
 
 import { Source } from '../models/source';
 
@@ -9,14 +11,18 @@ import { Source } from '../models/source';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements OnInit, OnDestroy {
 
   public filteredSources: Source[] = [];
   public selectedSources: Source[] = [];
   public typeSources: string = '';
   private sources: Source[] = [];
 
-  constructor(private httpService: HttpMockService) {}
+  constructor(
+    private httpService: HttpMockService,
+    private spinnerService: SpinnerService,
+    private store: StoreService
+  ) {}
 
   public selectSource(source: Source): void {
     this.selectedSources.push(source);
@@ -42,13 +48,32 @@ export class FilterComponent implements OnInit {
     this.filteredSources = this.sources.filter(source => regexp.test(source.name) && !this.selectedSources.includes(source)); // ???
   }
 
+  @Output() onChanged = new EventEmitter();
+  public acceptFilter(): void {
+    this.onChanged.emit();
+  }
+
   ngOnInit() {
+    if (this.store.sources.length) {
+      this.sources = this.store.sources;
+      this.filteredSources = this.store.filteredSources;
+      this.selectedSources = this.store.selectedSources;
+      return;
+    }
+    this.spinnerService.show();
     this.httpService.getSources()
       .then(resp => {
         this.sources = resp.sources
         this.filteredSources = this.sources;
+        this.spinnerService.hide();
       })
       .catch(e => {throw new Error('wrong sources')});
+  }
+
+  ngOnDestroy() {
+    this.store.sources = this.sources;
+    this.store.filteredSources = this.filteredSources;
+    this.store.selectedSources = this.selectedSources;
   }
 
 }

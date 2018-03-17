@@ -1,0 +1,21 @@
+.outside {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+}
+.container {
+  width: 80%;
+  height: 80%;
+  background: white;
+  border-radius: 5px;
+  padding: 20px;
+}
+img {
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+}

@@ -6,15 +6,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpService } from './services/http.service';
 import { HttpMockService } from './services/http.mock.service';
 import { IHttpService } from './services/interfaces/i.http.service';
+import { SpinnerService } from './services/spinner.service';
 
 import { AppComponent } from './app.component';
 import { FilterComponent } from './filter/filter.component';
 import { AppRoutingModule } from './app-routing.module';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { StoreService } from './services/store.services';
+import { DetailComponent } from './detail/detail.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FilterComponent
+    FilterComponent,
+    SpinnerComponent,
+    DetailComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +32,9 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   providers: [
     HttpService,
-    HttpMockService
+    HttpMockService,
+    SpinnerService,
+    StoreService
   ],
   bootstrap: [AppComponent]
 })
