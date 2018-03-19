@@ -15,6 +15,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { StoreService } from './services/store.services';
 import { DetailComponent } from './detail/detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CreateNewsComponent } from './create-news/create-news.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FilterComponent,
     SpinnerComponent,
     DetailComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    CreateNewsComponent
   ],
   imports: [
     BrowserModule,
@@ -31,8 +33,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppRoutingModule
   ],
   providers: [
-    HttpService,
-    HttpMockService,
+    { provide: IHttpService, useClass: HttpMockService },
     SpinnerService,
     StoreService
   ],

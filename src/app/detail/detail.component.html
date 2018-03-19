@@ -2,11 +2,12 @@
   <div class="container">
     <a routerLink="">X</a>
     <h2>{{article.title}}</h2>
-    <img src={{article.urlToImage}} alt={{article.title}}>
+    <img *ngIf="article.urlToImage" src={{article.urlToImage}} alt={{article.title}}>
     <div>{{article.description}}</div>
     <a href={{article.url}} target="_blank">Read the article</a>
     <div>Author: {{article.author}}</div>
     <div>Source: {{article.source.name}}</div>
     <div>Published: {{article.publishedAt | date: 'dd/MM/yyyy'}}</div>
+    <button *ngIf="article.source.name === 'my-news'" (click)="deleteArticle()">delete</button>
   </div>
 </div>

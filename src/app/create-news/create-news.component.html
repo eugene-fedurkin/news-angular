@@ -1,0 +1,17 @@
+<div class="outside">
+  <div class="content">
+    <a routerLink="">X</a>
+    <h2>Create news</h2>
+    <label for="title">Title:</label>
+    <input id="title" type="text" [(ngModel)]="title" minlength="2" required #head="ngModel" />
+    <div *ngIf="head.invalid && head.errors.minlength && (head.dirty || head.touched)">
+        Title must be at least 2 characters long.
+    </div>
+    <label for="description">Description:</label>
+    <textarea id="description" [(ngModel)]="description" minlength="5" required #descriptionOfNews="ngModel" ></textarea>
+    <div *ngIf="descriptionOfNews.invalid && descriptionOfNews.errors.minlength && (descriptionOfNews.dirty || descriptionOfNews.touched)">
+        Description must be at least 5 characters long.
+    </div>
+    <button [disabled]="head.invalid || descriptionOfNews.invalid" (click)="createNews()">Create</button>
+  </div>
+</div>

@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { IHttpService } from './interfaces/i.http.service';
 import { Sources } from '../models/sources';
 import { News } from '../models/news';
+import { Source } from '../models/source';
+import { Article } from '../models/article';
 
 @Injectable()
 export class HttpMockService implements IHttpService {
@@ -18,7 +20,15 @@ export class HttpMockService implements IHttpService {
   }
   
   public getSources(): Promise<Sources> {
-    return Promise.resolve(sources);    
+    return Promise.resolve(sources);
+  }
+  
+  public getNewsBySources(sources: Source[]): Promise<any> {
+    return Promise.resolve(news);
+  }
+
+  public getNewsByQuery(query: string, source: Source[]): Promise<any> {
+    return Promise.resolve(news);
   }
 }
 
@@ -79,7 +89,7 @@ const news = {
   "articles": [
     {
     "source": {
-      "id": "Inv",
+      "id": "",
       "name": "Investopedia.com"
     },
     "author": "John Kelleher",
@@ -90,9 +100,9 @@ const news = {
     "publishedAt": "2018-03-08T07:00:00Z"
     },
     {
-    "source": {
-    "id": "Qz",
-    "name": "Qz.com"
+      "source": {
+      "id": "Qz",
+      "name": "Qz.com"
     },
     "author": "Dan Kopf",
     "title": "Why are people still using so much cash?",
@@ -100,6 +110,30 @@ const news = {
     "url": "https://qz.com/1227322/why-are-people-still-using-so-much-cash/",
     "urlToImage": "https://qzprod.files.wordpress.com/2018/03/mnuchincash.jpg?quality=80&strip=all&w=1600",
     "publishedAt": "2018-03-15T16:46:45Z"
+    },
+    {
+      "source": {
+        "id": "the-new-york-times",
+        "name": "The New York Times"
+      },
+      "author": "BORHAN OSMAN",
+      "title": "Op-Ed Contributor: The U.S. Needs to Talk to the Taliban in Afghanistan",
+      "description": "Washington shies away from the idea of direct talks, but the Taliban see the United States as the decisive actor on the battlefield.",
+      "url": "https://www.nytimes.com/2018/03/19/opinion/america-afghanistan-taliban-talks.html",
+      "urlToImage": "https://static01.nyt.com/images/2018/03/13/opinion/13osman/13osman-facebookJumbo.jpg",
+      "publishedAt": "2018-03-19T09:45:06Z"
+    },
+    {
+      "source": {
+        "id": "the-wall-street-journal",
+        "name": "The Wall Street Journal"
+      },
+      "author": "Jay Greene",
+      "title": "Oracle Earnings: What to Watch",
+      "description": "Oracle is set to report earnings for its fiscal third quarter after the close of trading Monday.",
+      "url": "https://www.wsj.com/articles/oracle-earnings-what-to-watch-1521451801",
+      "urlToImage": "https://images.wsj.net/im-4219/social",
+      "publishedAt": "2018-03-19T09:30:10Z"
     }
   ]
 }

@@ -1,0 +1,16 @@
+.outside {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.6);
+}
+.content {
+  background: white;
+  border-radius: 4px;
+  height: 80%;
+  width: 80%;
+  padding: 20px;
+}

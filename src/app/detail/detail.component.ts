@@ -11,7 +11,7 @@ import { StoreService } from '../services/store.services';
 })
 export class DetailComponent implements OnInit {
 
-  private nameArticle: string;
+  private articleId: string;
   public article: Article;
   private subscription: Subscription;
 
@@ -19,11 +19,16 @@ export class DetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private store: StoreService
   ) {
-    this.subscription = activatedRoute.params.subscribe(params => this.nameArticle = params['name']);
+    this.subscription = activatedRoute.params.subscribe(params => this.articleId = params['id']);
+  }
+
+  public deleteArticle(): void {
+    const articleIndex = this.store.articles.findIndex(article => article === this.article);
+    this.store.articles.splice(articleIndex, 1);
   }
 
   ngOnInit() {
-    this.article = this.store.articles.find(article => article.source.name === this.nameArticle);
+    this.article = this.store.articles.find(article => article.source.id === this.articleId);
   }
 
   ngOnDestroy() {

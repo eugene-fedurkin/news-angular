@@ -1,10 +1,18 @@
-<router-outlet (onChanged)="onChanged()"></router-outlet>
+<router-outlet></router-outlet>
 <spinner></spinner>
-<a routerLink="filter">Filter</a>
-<button (click)="isWatchLater ? watchNews($event) : watchLater($event)">{{isWatchLater ? WatchLater : WatchNews}}Watch later</button>
+<form (keydown)="getNewsByQuery($event)">
+  <input name="query" minlength="2" [(ngModel)]="query" #title="ngModel" />
+  <div *ngIf="title.invalid && title.errors.minlength && (title.dirty || title.touched)">
+    Query must be at least 2 characters long.
+  </div>
+</form>
+<a routerLink="filter/filters?">Filter</a>
+<button (click)="isWatchLater = !isWatchLater">{{watchMod}}</button>
+<a routerLink="createNews">Create news</a>
 <div *ngFor="let article of articles">
   <button (click)="saveForLater(article)" [hidden]="isWatchLater">+</button>
   <h2>{{article.title}}</h2>
-  <img src={{article.urlToImage}} alt={{article.title}} />
-  <a routerLink="detail/{{article.source.name}}" routerLinkActive="active">Read more...</a>
+  <img *ngIf=article.urlToImage src={{article.urlToImage}} alt={{article.title}} />
+  <a routerLink="detail/{{article.source.id}}" routerLinkActive="active">Read more...</a>
+  <button *ngIf="isWatchLater" (click)="deleteFromWatchLater(article.source.id)">Delete from list 'Watch later'</button>
 </div>
