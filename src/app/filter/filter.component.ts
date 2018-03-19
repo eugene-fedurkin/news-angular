@@ -7,6 +7,7 @@ import { SpinnerService } from '../services/spinner.service';
 import { StoreService } from '../services/store.services';
 
 import { Source } from '../models/source';
+import { NoticeService } from '../services/notice.service';
 
 @Component({
   selector: 'filter',
@@ -18,12 +19,16 @@ export class FilterComponent implements OnInit, OnDestroy {
   public filteredSources: Source[] = [];
   public typeSources: string = '';
   private sources: Source[] = [];
+  private get selectedSources(): Source[] {
+    return this.store.selectedSources;
+  }
 
   constructor(
     private httpService: IHttpService,
     private spinnerService: SpinnerService,
     private store: StoreService,
-    private router: Router
+    private router: Router,
+    private notice: NoticeService,
   ) {}
 
   public selectSource(source: Source): void {
@@ -42,9 +47,13 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.httpService.getNewsBySources(this.store.selectedSources)
       .then(resp => {
         this.store.articles = this.store.addId(resp.articles);
-        console.log(resp.articles)
+        this.notice.success('The filter has been successfully applied');
         this.spinnerService.hide();
       })
+      .catch(error => {
+        this.notice.success('The filter can\'t be applied');
+        console.log(error.message);
+      });
   }
 
   public unSelectSource(source: Source): void {
@@ -55,7 +64,6 @@ export class FilterComponent implements OnInit, OnDestroy {
       this.filteredSources = [].concat(this.filteredSources.slice(0, index), unSelectedSource, this.filteredSources.slice(index));
     } else {
       this.filteredSources.push(...unSelectedSource);
-      console.log('push', this.filteredSources, unSelectedSource)
     }
   }
 
@@ -79,7 +87,10 @@ export class FilterComponent implements OnInit, OnDestroy {
         this.filteredSources = this.sources;
         this.spinnerService.hide();
       })
-      .catch(e => {throw new Error('wrong sources')});
+      .catch(error => {
+        this.notice.error('Can\'t find filters');
+        console.log(error.message);
+      });
   }
 
   ngOnDestroy() {

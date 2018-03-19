@@ -12,10 +12,13 @@ import { AppComponent } from './app.component';
 import { FilterComponent } from './filter/filter.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { StoreService } from './services/store.services';
+import { StoreService } from './services/store.services'; // TODO: wrong name
 import { DetailComponent } from './detail/detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CreateNewsComponent } from './create-news/create-news.component';
+import { NoticeService } from './services/notice.service';
+import { NotificationComponent } from './notification/notification.component';
+import { BodyContentComponent } from './body-content/body-content.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { CreateNewsComponent } from './create-news/create-news.component';
     SpinnerComponent,
     DetailComponent,
     PageNotFoundComponent,
-    CreateNewsComponent
+    CreateNewsComponent,
+    NotificationComponent,
+    BodyContentComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +40,8 @@ import { CreateNewsComponent } from './create-news/create-news.component';
   providers: [
     { provide: IHttpService, useClass: HttpMockService },
     SpinnerService,
-    StoreService
+    StoreService,
+    NoticeService
   ],
   bootstrap: [AppComponent]
 })

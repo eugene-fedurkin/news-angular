@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { StoreService } from '../services/store.services';
 import { Article } from '../models/article';
 import { Router } from '@angular/router';
+import { NoticeService } from '../services/notice.service';
 
 @Component({
   selector: 'app-create-news',
@@ -15,7 +16,8 @@ export class CreateNewsComponent {
 
   constructor(
     private store: StoreService,
-    private router: Router
+    private router: Router,
+    private notice: NoticeService,
   ) {}
 
   public createNews(): void {
@@ -33,5 +35,6 @@ export class CreateNewsComponent {
     }
     this.store.articles.unshift(article);
     this.router.navigateByUrl('');
+    this.notice.success('The news has been successfully created');
   }
 }
