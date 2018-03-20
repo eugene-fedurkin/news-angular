@@ -1,3 +1,5 @@
-<div *ngFor="let notice of queue">
-  {{notice.message}}
-</div>
+<section>
+  <div *ngFor="let notice of queue" [@flyInOut]>
+    {{notice.message}}
+  </div>
+</section>

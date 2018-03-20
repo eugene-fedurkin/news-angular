@@ -1,13 +1,23 @@
 <div class="outside">
   <div class="container">
-    <a routerLink="">X</a>
+    <a class="close" routerLink="">
+      <img src="/assets/imgs/cancel.svg" alt="close">
+    </a>
     <h2>{{article.title}}</h2>
-    <img *ngIf="article.urlToImage" src={{article.urlToImage}} alt={{article.title}}>
-    <div>{{article.description}}</div>
-    <a href={{article.url}} target="_blank">Read the article</a>
-    <div>Author: {{article.author}}</div>
-    <div>Source: {{article.source.name}}</div>
-    <div>Published: {{article.publishedAt | date: 'dd/MM/yyyy'}}</div>
-    <button *ngIf="article.source.name === 'my-news'" (click)="deleteArticle()">delete</button>
+    <img *ngIf="article.urlToImage" src={{article.urlToImage}} alt={{article.title}} />
+    <section>
+      <div class="description">{{article.description}}</div>
+      <div class="optionalInfo">
+        <span>
+          <div>Author: {{article.author}}</div>
+          <div>Source: {{article.source.name}}</div>
+          <div>Published: {{article.publishedAt | date: 'dd/MM/yyyy'}}</div>
+        </span>
+        <span>
+          <button *ngIf="article.source.name === 'my-news'" (click)="openModal()">Delete</button>
+          <a *ngIf="article.source.name !== 'my-news'" href={{article.url}} target="_blank">Read the article</a>
+        </span>
+      </div>
+    </section>
   </div>
 </div>

@@ -5,6 +5,8 @@
   align-items: center;
   height: 100%;
   width: 100%;
+  left: 0;
+  top: 0;
   background: rgba(0,0,0,0.6);
 }
 .container {
@@ -13,9 +15,66 @@
   background: white;
   border-radius: 5px;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+a.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+a > img {
+  width: 15px;
+}
+h2 {
+  text-align: center;
 }
 img {
   width: 300px;
   display: block;
   margin: 0 auto;
+}
+section {
+  flex-grow: 1;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+.description {
+  text-align: center;
+  margin-top: 15px;
+}
+.optionalInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.optionalInfo > span {
+  display: flex;
+  flex-direction: column;
+}
+.optionalInfo a {
+  color: #1DA1F2;
+  text-decoration: none;
+  font-size: 16px;
+}
+.optionalInfo a:hover {
+  text-decoration: underline;
+}
+button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-family: Quicksand;
+  color: #1DA1F2;
+  outline: none;
+  text-align: left;
+  padding: 0;
+}
+button:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }

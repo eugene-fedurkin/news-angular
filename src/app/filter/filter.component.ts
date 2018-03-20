@@ -8,11 +8,36 @@ import { StoreService } from '../services/store.services';
 
 import { Source } from '../models/source';
 import { NoticeService } from '../services/notice.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.css']
+  styleUrls: ['./filter.component.css'],
+  animations: [
+  trigger('flyInOutLeft', [
+    state('in', style({transform: 'translateX(0)', opacity: 1})),
+    transition('void => *', [
+      style({
+        transform: 'translateX(-300px)',
+        opacity: 0,
+      }),
+      animate(200)
+    ]),
+    transition('* => void', [
+      animate(200, style({transform: 'translateX(-300px)', opacity: 0}))
+    ])
+  ]),
+  trigger('flyInOutRight', [
+    state('in', style({transform: 'translateX(0)', opacity: 1})),
+    transition('void => *', [
+      style({transform: 'translateX(300px)', opacity: 0}),
+      animate(200)
+    ]),
+    transition('* => void', [
+      animate(200, style({transform: 'translateX(300px)', opacity: 0}))
+    ])
+  ])]
 })
 export class FilterComponent implements OnInit, OnDestroy {
 
@@ -44,11 +69,12 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   public acceptFilter(): void {
     this.spinnerService.show();
-    this.httpService.getNewsBySources(this.store.selectedSources)
+    this.httpService.getNewsByQuery(this.store.query,this.store.selectedSources)
       .then(resp => {
         this.store.articles = this.store.addId(resp.articles);
         this.notice.success('The filter has been successfully applied');
         this.spinnerService.hide();
+        this.router.navigate(['']);
       })
       .catch(error => {
         this.notice.success('The filter can\'t be applied');

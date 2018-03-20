@@ -2,26 +2,52 @@
   <div class="containerControlPanel">
     <section class="controlPanel">
       <form (keydown)="getNewsByQuery($event)">
-        <input name="query" placeholder="Search" minlength="2" [(ngModel)]="query" #title="ngModel" />
+        <input name="query" placeholder="Search" minlength="3" [ngModel]="query" (ngModelChange)="saveQueryToStore($event)" #title="ngModel" />
         <div *ngIf="title.invalid && title.errors.minlength && (title.dirty || title.touched)">
-          Query must be at least 2 characters long.
+          <img src="/assets/imgs/bulb-off.svg" alt="lamp" />
+          <span>
+            Query must be at least 3 characters long.
+          </span>
         </div>
       </form>
-      <a routerLink="filter/filters?">Filter</a>
-      <button (click)="isWatchLater = !isWatchLater">{{watchMod}}</button>
-      <a routerLink="createNews">Create news</a>
+      <div class="options">
+        <h5>Options:</h5>
+        <span>
+          <img class="filter" src="/assets/imgs/funnel.svg" alt="filter" />
+          <a routerLink="filter/filters?">Filter</a>
+        </span>
+        <span>
+          <img src="/assets/imgs/clock.svg" alt="clock" />
+          <button (click)="isWatchLater = !isWatchLater">{{watchMod}}</button>
+        </span>
+        <span>
+          <img src="/assets/imgs/create.svg" alt="create" />
+          <a routerLink="createNews">Create news</a>
+        </span>
+      </div>
     </section>
   </div>
   <div class="newsList">
-    <div *ngFor="let article of articles">
-      <button (click)="saveForLater(article)" [hidden]="isWatchLater">+</button>
+    <div *ngFor="let article of articles" class="news">
       <h2>{{article.title}}</h2>
-      <img *ngIf=article.urlToImage src={{article.urlToImage}} alt={{article.title}} />
+      <span class="plusContainer" *ngIf="!isWatchLater" tooltip="Save to 'Watch Later'">
+        <img class="plus" src="/assets/imgs/add.svg" (click)="saveForLater(article)" alt="plus" />
+      </span>
+      <span class="deleteContainer" tooltip="Delete from list 'Watch later'" *ngIf="isWatchLater">
+        <img class="delete" (click)="confirmTodelete(article.source.id)" src="/assets/imgs/delete-button.svg" alt="delete" />
+      </span>
+      <img class="mainImg" *ngIf=article.urlToImage src={{article.urlToImage}} alt={{article.title}} />
       <a routerLink="detail/{{article.source.id}}" routerLinkActive="active">Read more...</a>
-      <button *ngIf="isWatchLater" (click)="deleteFromWatchLater(article.source.id)">Delete from list 'Watch later'</button>
+    </div>
+    <div class="noticeWatchLater" *ngIf="!articles.length && isWatchLater">
+      You haven't news in "Watch Later"
+    </div>
+    <div class="noticeNews" *ngIf="!articles.length && !isWatchLater">
+      No news found for this news request
     </div>
   </div>
   <router-outlet></router-outlet>
   <spinner></spinner>
   <notification></notification>
+  <modal></modal>
 </main>

@@ -1,6 +1,8 @@
 .outside {
   height: 100%;
   width: 100%;
+  top: 0;
+  left: 0;
   position: fixed;
   display: flex;
   justify-content: center;
@@ -8,9 +10,83 @@
   background: rgba(0,0,0,0.6);
 }
 .content {
+  position: relative;
   background: white;
   border-radius: 4px;
-  height: 80%;
+  height: min-content;
   width: 80%;
+  max-width: 671px;
   padding: 20px;
+}
+h2 {
+  margin-top: 0;
+}
+a > img {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 15px;
+}
+div > span {
+  display: flex;
+  flex-direction: column;
+}
+.titleContainer, .notice {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.descriptionContainer {
+  display: flex;
+  align-items: self-start;
+}
+label {
+  display: inline-block;
+  width: 100px;
+  margin-bottom: 5px;
+}
+input {
+  outline: none;
+  border: 2px solid #1DA1F2;
+  border-radius: 4px;
+  font-size: 17px;
+  padding: 5px 5px 5px 7px;
+  color: #1DA1F2;
+}
+div.notice {
+  border-left: 3px solid #DECC09;
+  background: #FDFCDD;
+  margin: 21px 0 0 15px;
+ }
+div.notice > img {
+  width: 30px;
+}
+textarea {
+  resize: none;
+  height: 100px;
+  width: 216px;
+  border-radius: 4px;
+  border: 2px solid #1DA1F2;
+  font-family: Quicksand;
+  font-size: 17px;
+  padding: 5px 5px 5px 7px;
+  outline: none;
+  color: #1DA1F2;
+}
+button {
+  margin-top: 20px;
+  background-color: #1da1f2;
+  border: 1px solid #1da1f2;
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-family: Quicksand;
+  float: right;
+  cursor: pointer;
+  outline: none;
+}
+button:hover {
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
 }

@@ -1,0 +1,10 @@
+<div *ngIf="isOpen" class="outside">
+  <div class="container">
+    <h2>Confirmation</h2>
+    <div class="message">{{message}}</div>
+    <div class="btns">
+      <button (click)="close()">Close</button>
+      <button class="ok" (click)="prefer()">Ok</button>
+    </div>
+  </div>
+</div>

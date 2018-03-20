@@ -1,16 +1,44 @@
 <div class="outside">
   <div class="content">
-    <a routerLink="">X</a>
+    <a routerLink="">
+      <img src="/assets/imgs/cancel.svg" alt="close" />
+    </a>
     <h2>Create news</h2>
-    <label for="title">Title:</label>
-    <input id="title" type="text" [(ngModel)]="title" minlength="2" required #head="ngModel" />
-    <div *ngIf="head.invalid && head.errors.minlength && (head.dirty || head.touched)">
-        Title must be at least 2 characters long.
+    <div class="titleContainer">
+      <span>
+        <label for="title">Title:</label>
+        <input id="title" type="text" [(ngModel)]="title" minlength="3" required #head="ngModel" />
+      </span>
+      <div class="notice" *ngIf="head.invalid && head.errors.minlength && (head.dirty || head.touched)">
+        <img src="/assets/imgs/bulb-off.svg" alt="lamp" />
+        <span>
+         Title must be at least 3 characters long.
+        </span>
+      </div>
+      <div class="notice" *ngIf="head.errors &&head.errors.required && head.invalid && (head.dirty || head.touched)">
+        <img src="/assets/imgs/bulb-off.svg" alt="lamp" />
+        <span>
+          Title is required.
+        </span>
+      </div>
     </div>
-    <label for="description">Description:</label>
-    <textarea id="description" [(ngModel)]="description" minlength="5" required #descriptionOfNews="ngModel" ></textarea>
-    <div *ngIf="descriptionOfNews.invalid && descriptionOfNews.errors.minlength && (descriptionOfNews.dirty || descriptionOfNews.touched)">
-        Description must be at least 5 characters long.
+    <div class="descriptionContainer">
+      <span>
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="description" minlength="5" required #descriptionOfNews="ngModel" ></textarea>
+      </span>
+      <div class="notice" *ngIf="descriptionOfNews.invalid && descriptionOfNews.errors.minlength && (descriptionOfNews.dirty || descriptionOfNews.touched)">
+          <img src="/assets/imgs/bulb-off.svg" alt="lamp" />
+          <span>
+            Description must be at least 5 characters long.
+          </span>
+      </div>
+      <div class="notice" *ngIf="descriptionOfNews.errors && descriptionOfNews.errors.required && descriptionOfNews.invalid && (descriptionOfNews.dirty || descriptionOfNews.touched)">
+        <img src="/assets/imgs/bulb-off.svg" alt="lamp" />
+        <span>
+          Description is required.
+        </span>
+      </div>
     </div>
     <button [disabled]="head.invalid || descriptionOfNews.invalid" (click)="createNews()">Create</button>
   </div>

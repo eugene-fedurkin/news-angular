@@ -1,17 +1,22 @@
 <div class="outside">
   <div class="container">
-    <a routerLink="">X</a>
+    <h2>Select filters</h2>
+    <a routerLink="">
+      <img src="/assets/imgs/cancel.svg" alt="close" />
+    </a>
     <input type="text" [ngModel]="typeSources" (ngModelChange)="filterSources($event)" />
-    <div class="sources">
-      <ul>
-        <li *ngFor="let source of filteredSources" (click)="selectSource(source)">{{source.name}}</li>
-      </ul>
+    <div class="containerToFilter">
+      <div class="sources">
+        <ul>
+          <li *ngFor="let source of filteredSources" [@flyInOutLeft]="source" (click)="selectSource(source)">{{source.name}}</li>
+        </ul>
+      </div>
+      <div class="sourcesToFilter">
+        <ul>
+          <li *ngFor="let source of selectedSources" [@flyInOutRight] (click)="unSelectSource(source)">{{source.name}}</li>
+        </ul>
+      </div>
     </div>
-    <div class="sourcesToFilter">
-      <ul>
-        <li *ngFor="let source of selectedSources" (click)="unSelectSource(source)">{{source.name}}</li>
-      </ul>
-    </div>
-    <a routerLink="" (click)="acceptFilter()">Accept</a>
+    <button (click)="acceptFilter()">Accept</button>
   </div>
 </div>

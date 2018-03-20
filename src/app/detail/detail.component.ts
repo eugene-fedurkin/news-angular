@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { Article } from '../models/article';
 import { StoreService } from '../services/store.services';
+import { ModalService } from '../services/modal.service';
+import { NoticeService } from '../services/notice.service';
 
 @Component({
   selector: 'detail',
@@ -17,14 +19,25 @@ export class DetailComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: StoreService
+    private router: Router,
+    private store: StoreService,
+    private modal: ModalService,
+    private notice: NoticeService
   ) {
     this.subscription = activatedRoute.params.subscribe(params => this.articleId = params['id']);
+  }
+
+  public openModal(): void {
+    const message = 'Are you sure that you want to delete this news?';
+    console.log(this, 'detail')
+    this.modal.openModal(message, () => this.deleteArticle());
   }
 
   public deleteArticle(): void {
     const articleIndex = this.store.articles.findIndex(article => article === this.article);
     this.store.articles.splice(articleIndex, 1);
+    this.router.navigate(['']);
+    this.notice.success('The news has been deleted');
   }
 
   ngOnInit() {

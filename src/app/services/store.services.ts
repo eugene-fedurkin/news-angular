@@ -6,6 +6,7 @@ import { NoticeService } from './notice.service';
 @Injectable()
 export class StoreService {
   public articles: Article[] = [];
+  public query: string = '';
   public sources: Source[] = [];
   public filteredSources: Source[] = [];
   public selectedSources: Source[] = [];
