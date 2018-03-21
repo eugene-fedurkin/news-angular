@@ -46,6 +46,8 @@ section {
 .description {
   text-align: center;
   margin-top: 15px;
+  max-height: 160px;
+  overflow: hidden;
 }
 .optionalInfo {
   display: flex;

@@ -14,7 +14,7 @@ import { FilterComponent } from './filter/filter.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { ModalService } from './services/modal.service';
-import { StoreService } from './services/store.services'; // TODO: wrong name
+import { StoreService } from './services/store.service';
 import { DetailComponent } from './detail/detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CreateNewsComponent } from './create-news/create-news.component';

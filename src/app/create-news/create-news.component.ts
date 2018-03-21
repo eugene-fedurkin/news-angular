@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StoreService } from '../services/store.services';
+import { StoreService } from '../services/store.service';
 import { Article } from '../models/article';
 import { Router } from '@angular/router';
 import { NoticeService } from '../services/notice.service';

@@ -16,8 +16,7 @@ div.outside > div.container {
   top: 10%;
   border-radius: 4px;
   padding: 20px;
-  overflow: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 a > img {
   position: absolute;
@@ -25,18 +24,35 @@ a > img {
   right: 20px;
   width: 15px;
 }
-.sources {
-  border: 1px solid black;
+.sources, .sourcesToFilter {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 300px;
 }
-.sourcesToFilter {
+.sources::-webkit-scrollbar-button,
+.sourcesToFilter::-webkit-scrollbar-button {}
+
+.sources::-webkit-scrollbar, .sourcesToFilter::-webkit-scrollbar {
+    width: 12px;
+    height: 13px;
 }
+ 
+.sources::-webkit-scrollbar-track,.sourcesToFilter::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+.sources::-webkit-scrollbar-thumb,
+.sourcesToFilter::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(29, 161, 242, 1);
+}
+
+
 
 li:hover {
   opacity: 0.6;
 }
-
-
-
 .containerToFilter {
   display: flex;
   justify-content: space-between;

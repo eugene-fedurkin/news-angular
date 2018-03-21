@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpService } from '../services/http.service';
 import { IHttpService } from '../services/interfaces/i.http.service';
 import { SpinnerService } from '../services/spinner.service';
-import { StoreService } from '../services/store.services';
+import { StoreService } from '../services/store.service';
 
 import { Source } from '../models/source';
 import { NoticeService } from '../services/notice.service';
@@ -69,7 +69,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   public acceptFilter(): void {
     this.spinnerService.show();
-    this.httpService.getNewsByQuery(this.store.query,this.store.selectedSources)
+    this.httpService.getNewsByQuery(this.store.query,this.store.selectedSources, false)
       .then(resp => {
         this.store.articles = this.store.addId(resp.articles);
         this.notice.success('The filter has been successfully applied');

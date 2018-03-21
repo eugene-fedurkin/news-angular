@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { IHttpService } from '../services/interfaces/i.http.service';
 import { SpinnerService } from '../services/spinner.service';
 import { ModalService } from '../services/modal.service';
 import { Article } from '../models/article';
-import { StoreService } from '../services/store.services';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'body-content',
@@ -12,6 +12,9 @@ import { StoreService } from '../services/store.services';
   styleUrls: ['./body-content.component.css'],
 })
 export class BodyContentComponent implements OnInit, OnDestroy {
+
+  @ViewChild('newsList')
+  newsList: ElementRef;
 
   public get query(): string {
     return this.store.query;
@@ -39,7 +42,7 @@ export class BodyContentComponent implements OnInit, OnDestroy {
   public getNewsByQuery(event: KeyboardEvent) {
     if (event.keyCode === 13 && this.query.length > 2) {
       this.spinnerService.show();
-      this.httpService.getNewsByQuery(this.query, this.store.selectedSources)
+      this.httpService.getNewsByQuery(this.query, this.store.selectedSources, false)
         .then(resp => {
           this.store.articles = this.store.addId(resp.articles);
           this.spinnerService.hide();
@@ -74,7 +77,7 @@ export class BodyContentComponent implements OnInit, OnDestroy {
     this.initializeArticlesFromStore();
   }
 
-  private throttle(action: any): any {
+private throttle(action: any): any {
     let isRunning = false;
     return function() {
       if (isRunning) return;
@@ -86,16 +89,10 @@ export class BodyContentComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
-    this.spinnerService.show();
-    this.httpService.getNews()
-      .then(resp => {
-        this.store.articles = this.store.addId(resp.articles);
-        this.spinnerService.hide();
-      });
-    this.initializeArticlesFromStore();
-    window.addEventListener('scroll', this.throttle(() => {
-      if (!this.isLoadingDate && window.pageYOffset + window.innerHeight >= document.getElementsByClassName('newsList')[0].offsetHeight) {
+  private getAdditionNews(): void {
+    this.throttle(() => {
+      const isEndPage = window.pageYOffset + window.innerHeight >= this.newsList.nativeElement.offsetHeight;
+      if (!this.isLoadingDate && isEndPage) {
         this.spinnerService.show();
         this.isLoadingDate = true;
         this.httpService.getNewsByQuery(this.query, this.store.selectedSources, true)
@@ -105,10 +102,21 @@ export class BodyContentComponent implements OnInit, OnDestroy {
             this.spinnerService.hide();
         })
       }
-    }));
+    })();
+  }
+
+  ngOnInit() {
+    this.spinnerService.show();
+    this.httpService.getNews()
+      .then(resp => {
+        this.store.articles = this.store.addId(resp.articles);
+        this.spinnerService.hide();
+      });
+    this.initializeArticlesFromStore();
+    window.addEventListener('scroll', () => this.getAdditionNews());
   }
 
   ngOnDestroy() {
-    window.removeEventListener('scroll') //TODO: add func
+    window.removeEventListener('scroll', () => this.getAdditionNews());
   }
 }

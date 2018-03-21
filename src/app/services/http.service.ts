@@ -20,7 +20,8 @@ export class HttpService implements IHttpService {
     return this.http.get(this.queryNews).toPromise<any>();
   }
 
-  public getNewsByQuery(query: string, sources: Source[], isAddition: boolean): Promise<News> {
+  public getNewsByQuery(input: string, sources: Source[], isAddition: boolean): Promise<News> {
+    const query = input ? input : 'angular';
     const stringSources = sources.length
       ? `&sources=${sources.map(source => source.id).join(',')}`
       : '';

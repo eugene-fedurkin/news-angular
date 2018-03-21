@@ -27,7 +27,7 @@
       </div>
     </section>
   </div>
-  <div class="newsList">
+  <div class="newsList" #newsList>
     <div *ngFor="let article of articles" class="news">
       <h2>{{article.title}}</h2>
       <span class="plusContainer" *ngIf="!isWatchLater" tooltip="Save to 'Watch Later'">

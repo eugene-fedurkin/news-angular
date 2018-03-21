@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router} from '@angular/router';
 import { Article } from '../models/article';
-import { StoreService } from '../services/store.services';
+import { StoreService } from '../services/store.service';
 import { ModalService } from '../services/modal.service';
 import { NoticeService } from '../services/notice.service';
 
